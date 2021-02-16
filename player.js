@@ -3,8 +3,6 @@ var id = localStorage.getItem("videoId");
 var sessionId = localStorage.getItem("sessionId");
 var currentTime;
 
-
-
 /*------------------------YOUTUBE PLAYER API-----------------------------*/ 
 tag.src = "https://www.youtube.com/iframe_api";
 var firstScriptTag = document.getElementsByTagName('script')[0];
@@ -24,11 +22,10 @@ function onYouTubeIframeAPIReady() {
             'onStateChange': onPlayerStateChange
         }
     });
-
 }
 
 function getCurrentTime(){
-    currentTime = player.getCurrentTime()
+    currentTime = player.getCurrentTime();
 }
 // 4. The API will call this function when the video player is ready.
 function onPlayerReady(event) {
