@@ -29,7 +29,7 @@ function createSession(e) {
 
     localStorage.setItem("videoId", id);
 
-    //Random sessionID getting created
+    //Random sessionID getting created  ---  now i need it fixed because when referring to the session in database i will get current time of the  video being played and apply it here
     var session = Math.random().toString(36).substring(7);
     localStorage.setItem("sessionId", session);
 
