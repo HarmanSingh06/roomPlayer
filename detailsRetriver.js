@@ -29,7 +29,8 @@ function createSession(e) {
 
     localStorage.setItem("videoId", id);
 
-    const session = Math.random().toString(36).substring(7);
+    //Random sessionID getting created
+    var session = Math.random().toString(36).substring(7);
     localStorage.setItem("sessionId", session);
 
 
@@ -44,7 +45,7 @@ async function joinSession(e) {
     e.preventDefault();
 
     var sessionId = getInputVal("sessionId");
-    
+
     await db.ref("sessions/" + sessionId).on('value', (data) => {
         var id = data.val().id
         console.log(id);
