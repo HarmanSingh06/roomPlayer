@@ -39,10 +39,12 @@ function createSession(e) {
     window.location.href = "player.html";
 }
 
+//this is helping to join the session
 async function joinSession(e) {
     e.preventDefault();
 
     var sessionId = getInputVal("sessionId");
+    
     await db.ref("sessions/" + sessionId).on('value', (data) => {
         var id = data.val().id
         console.log(id);
