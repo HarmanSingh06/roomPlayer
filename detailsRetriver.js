@@ -1,3 +1,4 @@
+const session = Math.random().toString(36).substring(7);
 // Your web app's Firebase configuration
 var firebaseConfig = {
     apiKey: "AIzaSyB9uDBL1ClI9S5ztN94TJNeuC673-rJV3Y",
@@ -10,9 +11,9 @@ var firebaseConfig = {
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-const sessionId;
-var db = firebase.database();
 
+var db = firebase.database();
+localStorage.setItem('db',db);
 function getInputVal(id) {
     return document.getElementById(id).value;
 }
@@ -29,16 +30,15 @@ function createSession(e) {
 
     localStorage.setItem("videoId", id);
 
-    //Random sessionID getting created  ---  now i need it fixed because when referring to the session in database i will get current time of the  video being played and apply it here
-    var session = Math.random().toString(36).substring(7);
-    sessionId = session;
+//Random sessionID getting created  ---  now i need it fixed because when referring to the session in database i will get current time of the  video being played and apply it here
+    // var session = Math.random().toString(36).substring(7);
     localStorage.setItem("sessionId", session);
-
-
+    console.log(session);
+    
     db.ref("sessions" + "/" + session).set({
         id: id,
     });
-    window.location.href = "player.html";
+    window.location.href = "./host/player.html";
 }
 
 //this is helping to join the session
@@ -52,6 +52,5 @@ async function joinSession(e) {
         console.log(id);
         localStorage.setItem("videoId", id);
     });
-
-    window.location.href = "player.html";
+    window.location.href = "./child/player.html";
 }
