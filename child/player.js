@@ -3,7 +3,7 @@ var id = localStorage.getItem("videoId");
 var sessionId = localStorage.getItem("sessionId");
 var currentTime;
 
-/*------------------------YOUTUBE PLAYER API-----------------------------*/ 
+/*------------------------YOUTUBE PLAYER API-----------------------------*/
 tag.src = "https://www.youtube.com/iframe_api";
 var firstScriptTag = document.getElementsByTagName('script')[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
@@ -24,7 +24,7 @@ function onYouTubeIframeAPIReady() {
     });
 }
 
-function getCurrentTime(){
+function getCurrentTime() {
     return currentTime = player.getCurrentTime();
 }
 
@@ -33,7 +33,7 @@ function onPlayerReady(event) {
     event.target.playVideo();
     console.log(id)
 }
-function seek(timeLine){
+function seek(timeLine) {
     player.seekTo(timeLine);
 }
 // 5. The API calls this function when the player's state changes.
@@ -41,33 +41,37 @@ function seek(timeLine){
 //    the player should play for six seconds and then stop.
 var done = false;
 
-function pauseVideo(){
+function pauseVideo() {
     player.pauseVideo();
 }
-function playVideo(){
+function playVideo() {
     player.playVideo()
+}
+function stopVideo() {
+    player.stopVideo()
 }
 async function onPlayerStateChange(event) {
     if (event.data == YT.PlayerState.PLAYING && !done) {
-        setTimeout(stopVideo, 6000);
+        // setTimeout(stopVideo, 6000);
         done = true;
     }
-    await db.ref("sessions/"+sessionId).on('value',(data)=>{
-        var seekTime = data.val().time
+    await db.ref("sessions/" + sessionId).on('value', (data) => {
+
         var state = data.val().state
-        if(state == 1){
+        var seekTime = data.val().time
+        
+        if (state == 1) {
             playVideo()
         }
-        else if (state == 2){
-        pauseVideo()
-           seek(seekTime)
+        else if (state == 2) {
+            pauseVideo()
+            seek(seekTime)
         }
-        else if(state == 0){
+        else if (state == 0) {
             console.log("video ended")
         }
-        else if (state == -1){
+        else if (state == -1) {
             console.log("video yet to start")
         }
-        
     })
 }

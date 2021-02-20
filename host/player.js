@@ -57,6 +57,7 @@ async function onPlayerStateChange(event) {
 }
 function endSession(e){
     e.preventDefault()
-    db.ref("sessions/"+sessionId).remove();
+    db.ref("sessions/").remove();
+    alert("Session Ended")
     window.location.href = "../index.html"
 }
